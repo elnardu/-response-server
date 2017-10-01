@@ -14,7 +14,7 @@ require('dotenv').config()
 
 
 var apiRouter = require('./routes/api'),
-  voteRouter = require('./routes/vote')
+  pollRouter = require('./routes/polls')
 //   imagesRouter = require('./routes/images'),
 //   messagesRouter = require('./routes/messages'),
 // 	userRouter = require('./routes/user');
@@ -32,7 +32,7 @@ app.use(morgan('dev'));
 app.use(cors())
 
 app.use('/api', apiRouter)
-app.use('/', voteRouter)
+app.use('/polls', pollRouter)
 
 // app.use(express.static(staticPath));
 // app.use('/auth', authRouter);
@@ -42,10 +42,12 @@ app.use('/', voteRouter)
 // app.use('/images', imagesRouter);
 
 const scrapersManager = new ScrapersManager(config.settings)
-scrapersManager.run()
 
 const analysisManager = new AnalysisManager()
-analysisManager.run()
+setInterval(() => {
+	scrapersManager.run()
+	analysisManager.run()
+}, 60000)
 
 app.get('/status', (req, res) => {
 	res.json(config.settings)

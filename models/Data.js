@@ -17,7 +17,7 @@ let DataScheme = new Schema({
   },
   source: String, // name of social network
 
-  sentiment: Number, 
+  sentiment: Number,
   keywords: [String],
 
   isAnalysed: {
@@ -30,7 +30,8 @@ let DataScheme = new Schema({
     type: String,
     unique: true
   },
-  link: String
+  link: String,
+  pollId: Schema.Types.ObjectId
 }, {
   timestamps: {
     createdAt: 'created_at',

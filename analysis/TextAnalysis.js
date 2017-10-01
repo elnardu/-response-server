@@ -41,7 +41,7 @@ class TextAnalysis {
     }))
 
     Promise.all(promises).then(res => {
-      console.log(res)
+      // console.log(res)
       res[0].data.documents.forEach((e) => {
         Data.findById(e.id).then(data => {
           data.keywords = e.keyPhrases
