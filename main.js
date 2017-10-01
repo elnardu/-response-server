@@ -5,12 +5,16 @@ var express = require('express'),
 	morgan = require('morgan'),
   path = require('path'),
 	http = require('http').Server(app),
-	ScrapersManager = require('./scrapers/ScrapersManager')
+	cors = require('cors'),
+	ScrapersManager = require('./scrapers/ScrapersManager'),
+	AnalysisManager = require('./analysis/AnalysisManager')
 
-var config = require("./config");
+var config = require("./config")
+require('dotenv').config()
 
-// var authRouter = require('./routes/auth'),
-//   postRouter = require('./routes/post'),
+
+var apiRouter = require('./routes/api'),
+  voteRouter = require('./routes/vote')
 //   imagesRouter = require('./routes/images'),
 //   messagesRouter = require('./routes/messages'),
 // 	userRouter = require('./routes/user');
@@ -25,6 +29,10 @@ mongoose.connect(config.database);
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cors())
+
+app.use('/api', apiRouter)
+app.use('/', voteRouter)
 
 // app.use(express.static(staticPath));
 // app.use('/auth', authRouter);
@@ -33,6 +41,16 @@ app.use(morgan('dev'));
 // app.use('/api/user', userRouter);
 // app.use('/images', imagesRouter);
 
+const scrapersManager = new ScrapersManager(config.settings)
+scrapersManager.run()
+
+const analysisManager = new AnalysisManager()
+analysisManager.run()
+
+app.get('/status', (req, res) => {
+	res.json(config.settings)
+})
+
 http.listen(config.port, () => {
-	console.log("Listening on port " + config.port);
-});
+	console.log("Listening on port " + config.port)
+})

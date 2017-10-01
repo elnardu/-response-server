@@ -1,10 +1,14 @@
 {
 	"port": 8080,
 	"database": "mongodb://localhost/response",
-
-	"keywords": [
-		"boilermake",
-		"@boilermake1",
-		"#boilermake"
-	]
+	"settings": {
+		"keywords": [
+			"boilermake",
+			"@boilermake1",
+			"#boilermake"
+		],
+		"startDate": 1506643200,
+		"name": "BoilerMake V",
+		"description": "BoilerMake is an awesome hackathon that brings over 500 hackers from across the country under one roof for one incredible weekend, with a retro twist. As a team, our mission is to empower each and every hacker to build anything that they can imagine, and we’ll pull out all the stops to make sure that their dreams become reality. We find happiness in knowing that every hacker will walk out of our doors with memories that will last a lifetime. Look out for a weekend full of learning, hacking, tech talks, and tons of caffeine"
+	}
 }
